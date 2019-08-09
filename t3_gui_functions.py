@@ -1,5 +1,6 @@
 def new_project_method():
     print("new project")
+    t3Add()
 
 def edit_project_method():
     print("edit project")
