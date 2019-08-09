@@ -1,3 +1,5 @@
+from t3_gui import project_list_box_frame, END, content
+
 
 def new_project_method():
     project_list_box_frame.insert(END, content)
