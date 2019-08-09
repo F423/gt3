@@ -2,13 +2,15 @@ from t3 import *
 import tkinter as tk
 from tkinter import *
 
-#from t3_gui_functions import *
-    #TODO: seperate functions later
 
- #TEST#
+# from t3_gui_functions import *
+# TODO: seperate functions later
+
+#-TEST#
 def new_project_method():
     project_list_box.insert(END, entry.get())
     print("new project")
+
 
 def edit_project_method():
     print("edit project")
@@ -29,6 +31,7 @@ def edit_task_method():
 def delete_task_method():
     print("delete task")
 
+
 def makeentry(parent, caption, width=None, **options):
     Label(parent, text=caption).pack(side=LEFT)
     entry = Entry(parent, **options)  # change var name later (to avoid scope confusion)
@@ -36,6 +39,7 @@ def makeentry(parent, caption, width=None, **options):
         entry.config(width=width)
     entry.pack(side=LEFT)
     return entry
+
 
 # TEST#
 
@@ -77,7 +81,7 @@ BUTTON_HEIGHT = 1
 BUTTON_WIDTH = 10
 
 # list of projects
-project_list = []
+#project_list = [] #needed ? #TEST#
 
 # initialize tk (root) as gui and set master to default
 gui = tk.Tk()
@@ -152,9 +156,11 @@ entry.focus_set()
 def callback():
     print(entry.get())
 
-
-b = Button(master, text="get", width=10, command=callback)
+#-TEST#
+b = Button(master, text="Add", width=10, command=new_project_method)
 b.pack()
+#TEST-#
+
 
 # uncomment to add the button demonstrated in TKinter's hello world above
 # app = Gt3(master=gui)
@@ -166,7 +172,6 @@ entry = Entry(master, width=100)
 entry.pack()
 
 text = entry.get()
-
 
 ##### #########
 
@@ -180,6 +185,7 @@ text = content.get()
 content.set(text)
 
 # Quit button
-quit_button = tk.Button(project_button_frame, text="Quit", borderwidth=2, command=quit, width=BUTTON_WIDTH,
-                        height=BUTTON_HEIGHT)
+quit_button = tk.Button(project_button_frame, text="Quit",
+                        borderwidth=2, command=quit,
+                        width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
 quit_button.pack(side=TOP)
