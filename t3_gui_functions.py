@@ -1,5 +1,6 @@
+
 def new_project_method():
-    print("new project")
+    project_list_box_frame.insert(END, content)
 
 
 def edit_project_method():
