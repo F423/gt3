@@ -1,6 +1,13 @@
-# GT3: Graphical Todo-list / Time / Tracker
-## Team #3 - COMP 312/412 SU19
+GT3: Graphical Todo-list / Time / Tracker
+---
+#### Loyola University Chicago : COMP 312/412 SU19 - Team #3
+Please refer to [README.html](README.html) first for more info concerning the CLI of T3.
 
 
-See README.html
-
+##### Quick Start:
+run `t3_gui.py`
+##### Dependencies: 
+    - TKinter
+    - Python 
+   
+---

@@ -20,7 +20,7 @@ project_list = []
 # initialize tk
 gui = tk.Tk()
 
-# set the title of the window
+# set the title of the window±
 gui.title("T3: Todo-list / Time / Tracker")
 
 project_button_frame = Frame(gui, bg="white")
