@@ -17,18 +17,22 @@ def edit_project_method():
 
 
 def delete_project_method():
+    project_list_box.delete(0, END)
     print("delete project")
 
 
 def new_task_method():
+    task_list_box.insert(END, entry.get())
     print("new task")
 
 
 def edit_task_method():
+
     print("edit task")
 
 
 def delete_task_method():
+    task_list_box.delete(0, END)
     print("delete task")
 
 
