@@ -1,6 +1,7 @@
+
 def new_project_method():
-    print("new project")
-    t3Add()
+    project_list_box_frame.insert(END, content)
+
 
 def edit_project_method():
     print("edit project")
@@ -20,4 +21,3 @@ def edit_task_method():
 
 def delete_task_method():
     print("delete task")
-
