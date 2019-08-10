@@ -1,5 +1,6 @@
 from t3 import *
-
+import json
+import os
 import tkinter as tk
 from tkinter import *
 
@@ -52,7 +53,7 @@ def on_project_list_box_select(self):
     sel_project_index = project_list_box.curselection()
     # list with text of all selected items
     sel_project_item = [all_project_items[item] for item in sel_project_index]
-
+    # update the tasks associated with the project
     get_project_tasks_method("".join(sel_project_item))
 
 
@@ -65,6 +66,28 @@ def on_task_list_box_select(self):
     sel_task_index = task_list_box.curselection()
     # list with text of all selected items
     sel_task_item = [all_task_items[item] for item in sel_task_index]
+
+
+def get_selected_project():
+    # tuple with text of all items in Listbox
+    all_project_items = project_list_box.get(0, tk.END)
+    # tuple with indexes of selected items
+    sel_project_index = project_list_box.curselection()
+    # list with text of all selected items
+    sel_project_item = [all_project_items[item] for item in sel_project_index]
+    # return selected project
+    return sel_project_item
+
+
+def get_selected_task():
+    # tuple with text of all items in Listbox
+    all_task_items = task_list_box.get(0, tk.END)
+    # tuple with indexes of selected items
+    sel_task_index = task_list_box.curselection()
+    # list with text of all selected items
+    sel_task_item = [all_task_items[item] for item in sel_task_index]
+    # return the selected task
+    return sel_task_item
 
 
 
@@ -111,8 +134,10 @@ def get_project_tasks_method(in_pname):
             task_list_box.event_generate("<<ListboxSelect>>")
 
 
+
 def new_project_method():
     print("new project")
+    os.system("t3.py --add test_add_project test_task1 test_task2 test_task3")
 
 
 def edit_project_method():
@@ -126,6 +151,46 @@ def delete_project_method():
 def new_task_method():
     print("new task")
 
+    # Create a new window to enter a new task
+    global new_task_window
+    new_task_window = tk.Toplevel()
+    new_task_window.wm_title("New Task")
+
+    # field to allow user to input the name of the task
+    new_task_entry_field = Entry(new_task_window)
+    new_task_entry_field.pack(side=TOP)
+
+    # create the cancel button
+    new_task_cancel_button = tk.Button(new_task_window, text="Cancel", borderwidth=2, command=lambda: new_task_cancel_button_method(new_task_window),
+                                   width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+    # pack the cancel button
+    new_task_cancel_button.pack(side=RIGHT)
+
+
+    # create the ok button
+    new_task_ok_button = tk.Button(new_task_window, text="Ok", borderwidth=2, command=lambda: new_task_ok_button_method(None,new_task_window,new_task_entry_field),
+                                   width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+    # pack the ok button
+    new_task_ok_button.pack(side=LEFT)
+
+
+
+
+def new_task_cancel_button_method(window):
+    # destroy the parent window
+    window.destroy()
+
+
+def new_task_ok_button_method(self,window,entry):
+
+    # get the current selected project
+    selected_project = get_selected_project()
+    print(selected_project)
+    os.system("python t3.py --add " + "".join(selected_project) + " " + entry.get())
+    on_project_list_box_select(self)
+    # destroy the parent window
+    window.destroy()
+
 
 def edit_task_method():
     print("edit task")
@@ -133,6 +198,21 @@ def edit_task_method():
 
 def delete_task_method():
     print("delete task")
+
+    # get the current selected task
+    selected_task = get_selected_task()
+    print("delete task " + "".join(selected_task) )
+
+    # get the current selected project
+    selected_project = get_selected_project()
+    print("delete task from Project " + "".join(selected_project) )
+
+    print("python t3.py --delete " + "".join(selected_project) + " " + "".join(selected_task))
+    os.system("python t3.py --delete " + "".join(selected_project) + " " + "".join(selected_task))
+
+    # os.system("python t3.py --delete project1 task2")
+
+    get_project_tasks_method(selected_project)
 
 
 # window height
@@ -149,6 +229,9 @@ gui = tk.Tk()
 
 # set the title of the window
 gui.title("T3: Todo-list / Time / Tracker")
+
+
+
 
 project_button_frame = Frame(gui, bg="white")
 project_button_frame.pack(side=LEFT, fill=BOTH)
