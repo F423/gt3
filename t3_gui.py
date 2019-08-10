@@ -1,15 +1,36 @@
 from t3 import *
+import os
 import tkinter as tk
 from tkinter import *
+import json
 
 
 # from t3_gui_functions import *
 # TODO: seperate functions later
 
 #-TEST#
+
+def read_projects_method():
+    inputFile = 'tasks/tasks.json'
+    jsonData = open(inputFile).read()
+    jsonToPython = json.loads(jsonData)
+
+    t3json = jsonToPython['t3']  # pld
+    dumpprojects(t3json)
+
+    for pname in t3json:
+        tasklist = t3json[pname]
+        print("Project " + pname)
+        project_list_box.insert(END, pname)
+
+
+
+
 def new_project_method():
     project_list_box.insert(END, entry.get())
     print("new project")
+
+    os.system("t3.py --add" + entry.get() + " task1 task2")
 
 
 def edit_project_method():
@@ -146,6 +167,9 @@ new_task_button.pack(side=TOP)
 edit_task_button.pack(side=TOP)
 delete_task_button.pack(side=TOP)
 #TODO: del_all_tasks_button.pack(side=TOP)
+
+
+read_projects_method()
 
 # Entry Widget & String value: gets user's text input (testing)
 entry = Entry(master)
