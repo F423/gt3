@@ -157,11 +157,12 @@ entry.focus_set()
 def callback():
     print(entry.get())
 """
+# Entry Widget buttons (pb: project button, tb: task button)
+pb = Button(master, text="Projects++", width=10, command=new_project_method)
+pb.pack()
 
-b = Button(master, text="Add", width=10, command=new_project_method)
-b.pack()
-
-
+tb = Button(master, text="Tasks++", width=10, command=new_task_method)
+tb.pack()
 # executes the gui (calls tk's main)
 gui.mainloop()
 
