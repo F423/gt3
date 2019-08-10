@@ -4,45 +4,6 @@ import os
 import tkinter as tk
 from tkinter import *
 
-def poll():
-    # loop speed control
-    # delete_task_button.after(100,poll)
-
-    # tuple with text of all items in Listbox
-    all_project_items = project_list_box.get(0, tk.END)
-    # tuple with indexes of selected items
-    sel_project_index = project_list_box.curselection()
-    # list with text of all selected items
-    sel_project_item = [all_project_items[item] for item in sel_project_index]
-
-    # tuple with text of all items in Listbox
-    all_task_items = task_list_box.get(0, tk.END)
-    # tuple with indexes of selected items
-    sel_task_index = task_list_box.curselection()
-    # list with text of all selected items
-    sel_task_item = [all_task_items[item] for item in sel_task_index]
-
-
-
-    task_selection = task_list_box.curselection()
-
-   # print("")
-   # print("project selection : ")
-   # print(sel_project_index)
-   # print(sel_project_item)
-   # print("task selection")
-   # print(task_selection)
-   # print("")
-
-
-    #z = "".join(sel_project_item)
-    # get_project_tasks_method(z)
-    print()
-    print(sel_project_item)
-    print(sel_task_item)
-    print()
-    get_project_tasks_method("".join(sel_project_item))
-
 
 def on_project_list_box_select(self):
     print("on_project_list_box_select")
@@ -90,14 +51,13 @@ def get_selected_task():
     return sel_task_item
 
 
-
 def read_projects_method():
 
     # initialize jason structure
     inputFile = 'tasks/tasks.json'
     jsonData = open(inputFile).read()
     jsonToPython = json.loads(jsonData)
-    t3json = jsonToPython['t3']  # pld
+    t3json = jsonToPython['t3']
 
     # clear the project list box
     project_list_box.delete(0,'end')
@@ -117,7 +77,7 @@ def get_project_tasks_method(in_pname):
     inputFile = 'tasks/tasks.json'
     jsonData = open(inputFile).read()
     jsonToPython = json.loads(jsonData)
-    t3json = jsonToPython['t3']  # pld
+    t3json = jsonToPython['t3']
 
     # iterate through the json to find the project name
     for pname in t3json:
@@ -134,7 +94,6 @@ def get_project_tasks_method(in_pname):
             task_list_box.event_generate("<<ListboxSelect>>")
 
 
-
 def new_project_method():
     print("new project")
     os.system("t3.py --add test_add_project test_task1 test_task2 test_task3")
@@ -149,10 +108,9 @@ def delete_project_method():
 
 
 def new_task_method():
-    print("new task")
+    print("new task project")
 
     # Create a new window to enter a new task
-    global new_task_window
     new_task_window = tk.Toplevel()
     new_task_window.wm_title("New Task")
 
@@ -174,14 +132,17 @@ def new_task_method():
     new_task_ok_button.pack(side=LEFT)
 
 
-
-
 def new_task_cancel_button_method(window):
     # destroy the parent window
     window.destroy()
 
 
 def new_task_ok_button_method(self,window,entry):
+
+    # check if the text is empty or None
+    if "" == entry or entry is None:
+        window.destroy()
+        return
 
     # get the current selected project
     selected_project = get_selected_project()
@@ -230,26 +191,21 @@ gui = tk.Tk()
 # set the title of the window
 gui.title("T3: Todo-list / Time / Tracker")
 
-
-
-
+# setup project list areas
 project_button_frame = Frame(gui, bg="white")
 project_button_frame.pack(side=LEFT, fill=BOTH)
 
 project_list_box_frame = Frame(gui, background="white")
 project_list_box_frame.pack(side=LEFT, fill=BOTH, expand=TRUE)
 
+# setup task list areas
 task_list_box_frame = Frame(gui, background="white")
 task_list_box_frame.pack(side=LEFT, fill=BOTH, expand=TRUE)
 
 task_button_frame = Frame(gui, background="white")
 task_button_frame.pack(side=LEFT, fill=BOTH)
 
-
-
-
-
-
+# setup buttons
 new_project_button = tk.Button(project_button_frame, text="New Project", borderwidth=2, command=new_project_method,
                                width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
 edit_project_button = tk.Button(project_button_frame, text="Edit Project", borderwidth=2, command=edit_project_method,
@@ -263,31 +219,29 @@ edit_project_button.pack(side=TOP)
 delete_project_button.pack(side=TOP)
 quit_button.pack(side=TOP)
 
+# setup project list box
 project_list_box = Listbox(project_list_box_frame, selectmode=SINGLE, exportselection=False)
 project_list_box.bind('<<ListboxSelect>>', on_project_list_box_select)
 project_list_box.pack(side=TOP, fill=BOTH, expand=TRUE)
 
-
+# setup task list box
 task_list_box = Listbox(task_list_box_frame, selectmode=SINGLE, exportselection=False)
 task_list_box.bind('<<ListboxSelect>>', on_task_list_box_select)
 task_list_box.pack(side=TOP, fill=BOTH, expand=TRUE)
 
-
+# setup buttons
 new_task_button = tk.Button(task_button_frame, text="New Task", borderwidth=2, command=new_task_method,
                                width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
 edit_task_button = tk.Button(task_button_frame, text="Edit Task", borderwidth=2, command=edit_task_method,
                                 width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
 delete_task_button = tk.Button(task_button_frame, text="Delete Task", borderwidth=2, command=delete_task_method,
                                   width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
-
 new_task_button.pack(side=TOP)
 edit_task_button.pack(side=TOP)
 delete_task_button.pack(side=TOP)
 
-
-# read existing projects
+# read existing projects initially
 read_projects_method()
 
-
-# poll()
+# main loop
 gui.mainloop()
