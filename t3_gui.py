@@ -20,6 +20,12 @@ def delete_project_method():
     project_list_box.delete(0, END)
     print("delete project")
 
+#TODO:
+"""
+def del_all_projects_method():
+    project_list_box_frame.delete(0, END)
+    print("delete project")
+"""
 
 def new_task_method():
     task_list_box.insert(END, entry.get())
@@ -34,7 +40,13 @@ def edit_task_method():
 def delete_task_method():
     task_list_box.delete(0, END)
     print("delete task")
+"""
+def del_all_tasks_method():
+    task_list_box.delete(0, END)
+    print("delete task")
+"""
 
+#credits to http://effbot.org/tkinterbook
 
 def makeentry(parent, caption, width=None, **options):
     Label(parent, text=caption).pack(side=LEFT)
@@ -45,35 +57,7 @@ def makeentry(parent, caption, width=None, **options):
     return entry
 
 
-# TEST#
-
-'''
- 
-# TKinter's Hello World: showcases its use with Classes
-# should be used in the feature 
-    
-class Gt3(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-        self.create_widgets()
-
-    def create_widgets(self):
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side="top")
-
-        self.quit = tk.Button(self, text="QUIT", fg="red",
-                              command=self.master.destroy)
-        self.quit.pack(side="bottom")
-
-    def say_hi(self):
-        print("hi there, everyone!")
-'''
-
-# Geometry constants
+# Geometric constants
 
 # window height
 WINDOW_HEIGHT = 800
@@ -85,7 +69,7 @@ BUTTON_HEIGHT = 1
 BUTTON_WIDTH = 10
 
 # list of projects
-#project_list = [] #needed ? #TEST#
+#project_list = [] #DEL# needed?
 
 # initialize tk (root) as gui and set master to default
 gui = tk.Tk()
@@ -94,7 +78,6 @@ master = Tk()
 # set the title of the window
 gui.title("GT3: Graphical Todo-list / Time / Tracker")
 
-#######
 
 project_button_frame = Frame(gui, bg="white")
 project_button_frame.pack(side=LEFT, fill=BOTH)
@@ -108,7 +91,6 @@ task_list_box_frame.pack(side=LEFT, fill=BOTH, expand=TRUE)
 task_button_frame = Frame(gui, background="white")
 task_button_frame.pack(side=LEFT, fill=BOTH)
 
-#########
 
 new_project_button = tk.Button(project_button_frame, text="New Project",
                                borderwidth=2, command=new_project_method,
@@ -121,18 +103,26 @@ edit_project_button = tk.Button(project_button_frame, text="Edit Project",
 delete_project_button = tk.Button(project_button_frame, text="Delete Project",
                                   borderwidth=2, command=delete_project_method,
                                   width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+#TODO:
+"""
+del_all_projects_button = tk.Button(project_button_frame, text="Del. All Projects",
+                                  borderwidth=2, command=del_all_projects_method(),
+                                  width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+"""
 
 new_project_button.pack(side=TOP)
 edit_project_button.pack(side=TOP)
 delete_project_button.pack(side=TOP)
+#del_all_projects_button.pack(side=TOP)
 
-project_list_box = Listbox(project_list_box_frame)
+
+project_list_box: Listbox = Listbox(project_list_box_frame)
 project_list_box.pack(side=TOP, fill=BOTH, expand=TRUE)
 
 task_list_box = Listbox(task_list_box_frame)
 task_list_box.pack(side=TOP, fill=BOTH, expand=TRUE)
 
-#######
+
 
 new_task_button = tk.Button(task_button_frame, text="New Task",
                             borderwidth=2, command=new_task_method,
@@ -145,10 +135,17 @@ edit_task_button = tk.Button(task_button_frame, text="Edit Task",
 delete_task_button = tk.Button(task_button_frame, text="Delete Task",
                                borderwidth=2, command=delete_task_method,
                                width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+#TODO:
+"""
+del_all_tasks_button = tk.Button(task_button_frame, text="Del. All Tasks",
+                               borderwidth=2, command=del_all_tasks_method(),
+                               width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+"""
 
 new_task_button.pack(side=TOP)
 edit_task_button.pack(side=TOP)
 delete_task_button.pack(side=TOP)
+#TODO: del_all_tasks_button.pack(side=TOP)
 
 # Entry Widget & String value: gets user's text input (testing)
 entry = Entry(master)
@@ -156,28 +153,23 @@ entry.pack()
 
 entry.focus_set()
 
-
+"""
 def callback():
     print(entry.get())
+"""
 
-#-TEST#
 b = Button(master, text="Add", width=10, command=new_project_method)
 b.pack()
-#TEST-#
 
-
-# uncomment to add the button demonstrated in TKinter's hello world above
-# app = Gt3(master=gui)
 
 # executes the gui (calls tk's main)
 gui.mainloop()
 
+# Entry variables (includes same)
 entry = Entry(master, width=100)
 entry.pack()
 
 text = entry.get()
-
-##### #########
 
 
 user = makeentry(gui, "User name:", 10)
