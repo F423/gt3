@@ -169,8 +169,7 @@ def delete_task_method():
     print("delete task from Project " + "".join(selected_project) )
 
     print("python t3.py --delete " + "".join(selected_project) + " " + "".join(selected_task))
-    os.system("python t3.py --delete " + "".join(selected_project) + " " + "".join(selected_task))
-
+    # os.system("python t3.py --delete " + "".join(selected_project) + " " + "".join(selected_task))
     # os.system("python t3.py --delete project1 task2")
 
     get_project_tasks_method(selected_project)
